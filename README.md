@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Restaurant AI Demo
 
-## Getting Started
+Restaurant accounting dashboard with:
+- Transaction feed + manual expense entry
+- AI GL categorization (Anthropic)
+- Reconciliation + sales trend views
+- Plaid sandbox import via Plaid Link
 
-First, run the development server:
+## Setup
 
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Copy env template and fill keys:
+```bash
+cp .env.example .env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Required variables:
+- `ANTHROPIC_API_KEY`
+- `PLAID_CLIENT_ID`
+- `PLAID_SECRET`
+- `PLAID_ENV` (`sandbox` for local testing)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start dev server:
+```bash
+npm run dev
+```
 
-## Learn More
+4. Open `http://localhost:3000`
 
-To learn more about Next.js, take a look at the following resources:
+## Plaid Sandbox Connection
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Use the `Connect Plaid` button in the top bar.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+In Plaid Link sandbox login, use:
+- Username: `user_good`
+- Password: `pass_good`
 
-## Deploy on Vercel
+After successful link:
+- Public token is exchanged server-side
+- Last 30 days of transactions are imported
+- Imported transactions are auto-categorized with Claude
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Advanced Sandbox Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use the `Plaid Sandbox API Connect` panel to test credentials that can be ignored by OAuth Link flows.
+
+Defaults:
+- Institution ID: `ins_109508` (First Platypus Bank, non-OAuth)
+- Username: `user_good`
+- Password: `pass_good`
+
+Examples:
+- Dynamic transactions: `user_transactions_dynamic` + any password
+- MFA device flow: `user_good` + `mfa_device`
+- Error simulation: `user_good` + `error_ITEM_LOCKED` (or other supported `error_*` values)
+
+For dynamic transaction personas, connect first, then use `Refresh Transactions` to call Plaid `/transactions/refresh`.
