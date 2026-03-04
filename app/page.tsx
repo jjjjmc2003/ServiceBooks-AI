@@ -616,20 +616,20 @@ export default function Home() {
   return (
     <div className="min-h-screen" onClick={() => brandOpen && setBrandOpen(false)}>
       <header className="bg-white/90 backdrop-blur border-b border-slate-200 sticky top-0 z-20 shadow-[0_1px_0_0_rgba(15,23,42,0.03)]">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-semibold text-slate-900 tracking-tight">EMfire Brands</span>
-              <span className="text-slate-300">/</span>
-              <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <span className="text-sm font-semibold text-slate-900 tracking-tight shrink-0">EMfire</span>
+              <span className="text-slate-300 shrink-0">/</span>
+              <div className="relative min-w-0" onClick={(e) => e.stopPropagation()}>
                 <button
                   onClick={() => setBrandOpen((open) => !open)}
-                  className="flex items-center gap-1.5 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+                  className="flex items-center gap-1.5 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors min-w-0"
                 >
-                  <span className={`w-2 h-2 rounded-full ${currentBrand.badge}`} />
-                  {currentBrand.label}
-                  <span className="text-[10px] text-slate-400 font-normal">{currentBrand.location}</span>
-                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${currentBrand.badge}`} />
+                  <span className="truncate">{currentBrand.label}</span>
+                  <span className="hidden sm:inline text-[10px] text-slate-400 font-normal shrink-0">{currentBrand.location}</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400 shrink-0" />
                 </button>
                 {brandOpen && (
                   <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-slate-200 rounded-lg shadow-lg z-20 overflow-hidden">
@@ -653,38 +653,34 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 ml-2">
               {periodLocked && (
                 <span className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded border border-amber-300 bg-amber-50 text-amber-700">
                   <Lock className="w-3 h-3" />
-                  Period Locked
+                  <span className="hidden sm:inline">Period Locked</span>
                 </span>
               )}
               <button
                 onClick={handleConnectPlaid}
                 disabled={isPreparingPlaid || isImportingPlaid || periodLocked}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Link2 className="w-3 h-3" />
-                {isPreparingPlaid
-                  ? "Preparing Plaid..."
-                  : isImportingPlaid
-                    ? "Importing..."
-                    : plaidConnected
-                      ? "Reconnect Plaid"
-                      : "Connect Plaid"}
+                <Link2 className="w-3 h-3 shrink-0" />
+                <span className="hidden sm:inline">
+                  {isPreparingPlaid ? "Preparing…" : isImportingPlaid ? "Importing…" : plaidConnected ? "Reconnect" : "Connect Plaid"}
+                </span>
               </button>
               <button
                 onClick={logout}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 rounded-md hover:bg-slate-50 transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 rounded-md hover:bg-slate-50 transition-colors"
               >
-                <LogOut className="w-3 h-3" />
-                {viewer}
+                <LogOut className="w-3 h-3 shrink-0" />
+                <span className="hidden sm:inline">{viewer}</span>
               </button>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <div className="flex min-w-max">
               {TABS.map((tab) => (
                 <button
@@ -706,7 +702,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-[1240px] mx-auto px-6 py-7 space-y-4">
+      <main className="max-w-[1240px] mx-auto px-4 sm:px-6 py-4 sm:py-7 space-y-4">
         {apiError && (
           <div className="border border-red-200 bg-red-50 rounded-md px-4 py-3 text-xs text-red-700">
             <span className="font-semibold">Notice:</span> {apiError}

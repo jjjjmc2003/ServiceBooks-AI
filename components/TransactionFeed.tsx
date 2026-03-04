@@ -28,7 +28,7 @@ export function TransactionFeed({ transactions, onCategorizeAll, onAddExpense, i
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+      <div className="px-4 sm:px-6 py-4 border-b border-slate-100 flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold text-slate-900">Transactions</h2>
           <p className="text-xs text-slate-400 mt-0.5">
@@ -72,7 +72,7 @@ export function TransactionFeed({ transactions, onCategorizeAll, onAddExpense, i
         {transactions.map((tx) => (
           <div
             key={tx.id}
-            className={`px-6 py-3 flex items-center gap-4 hover:bg-slate-50/60 transition-colors ${
+            className={`px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-slate-50/60 transition-colors ${
               tx.status === "flagged" ? "bg-amber-50/50" : ""
             }`}
           >
